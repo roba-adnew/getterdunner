@@ -1,14 +1,18 @@
 // Filler code
-import * as listInterface from './listInterface.service.js';
+import { clearNewItemForm, createNewItemForm, addNewItem } from './listInterface.service.js';
+import { displayList, clearList } from './listRender.service.js';
 
-listInterface.createNewItemForm();
+createNewItemForm();
+displayList();
 
 const submitButton =  document.getElementById('submit-button');
 submitButton.addEventListener('click', function(event) {
     event.preventDefault();
-    console.log(`we added the new item`);
-
-    listInterface.clearNewItemForm();
-    listInterface.createNewItemForm();
+    
+    addNewItem();
+    clearNewItemForm();
+    createNewItemForm();
+    clearList();
+    displayList();
 })
 
