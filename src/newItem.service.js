@@ -17,7 +17,7 @@ export function newTodo (name) {
 
 export const parentListKeeper = (function () {
 
-    let parentList = [];
+    const parentList = [];
     const add = (item) => parentList.push(item);
     const remove = (item) => parentList.
         splice(parentList.indexOf(item),1);

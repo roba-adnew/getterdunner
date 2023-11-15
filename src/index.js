@@ -1,6 +1,6 @@
 // Filler code
 import { clearNewItemForm, createNewItemForm, addNewItem } from './listInterface.service.js';
-import { displayList, clearList } from './listRender.service.js';
+import { displayList, clearList } from './listDisplay.service.js';
 
 createNewItemForm();
 displayList();
@@ -10,9 +10,11 @@ submitButton.addEventListener('click', function(event) {
     event.preventDefault();
     
     addNewItem();
+
     clearNewItemForm();
-    createNewItemForm();
     clearList();
+
+    createNewItemForm();
     displayList();
 })
 

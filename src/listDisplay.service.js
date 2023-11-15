@@ -15,24 +15,31 @@ export function displayList() {
     const listDisplay = document.createElement('table');
     listDisplay.setAttribute('id','todo-list');
     
-    function printList(list) {
+    function buildHtmlList(list) {
         for (let item in list){
             const itemRow = document.createElement('tr');
             const checkBox = document.createElement('td');
             // Add a clickable check box for the cell data
 
             const itemDisplay = document.createElement('td');
-            itemDisplay.innerHTML = item.name; 
+            console.log(item);
+            itemDisplay.innerHTML = item.nameInput; 
             // if (item.isCompleted) Add in code for strikethrough css styling;
 
             itemRow.appendChild(checkBox);
             itemRow.appendChild(itemDisplay);
             listDisplay.appendChild(itemRow);
         } 
+
+        return listDisplay;
     }
 
-    printList(todoList);
-    printList(completedList);
+    const todoHtml = buildHtmlList(todoList);
+    const completedHTML = buildHtmlList(completedList);
+
+    const content = document.getElementById(`content`);
+    content.appendChild(todoHtml);
+    content.appendChild(completedHTML);
 }
 
 export function clearList() {

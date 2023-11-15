@@ -1,5 +1,4 @@
 import { newTodo, parentListKeeper } from './newItem.service';
-import { clearList, displayList } from './listRender.service';
 
 export function createNewItemForm () {
     
@@ -43,17 +42,10 @@ export function clearNewItemForm () {
     currentForm.remove()
 }
 
-
 export function addNewItem() {
     const newItemForm = document.getElementById('form');
     const newItem = newTodo(newItemForm.nameInput.value);
     
     parentListKeeper.add(newItem);
     parentListKeeper.print();
-
-    clearNewItemForm();
-    createNewItemForm();
-
-    clearList();
-    displayList();
 }
