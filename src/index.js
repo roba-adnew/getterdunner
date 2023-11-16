@@ -14,7 +14,6 @@ submitButton.addEventListener('click', function(event) {
     clearNewItemForm();
     clearList();
 
-    createNewItemForm();
     displayList();
 })
 

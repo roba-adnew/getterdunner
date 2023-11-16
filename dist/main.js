@@ -38,7 +38,7 @@ function displayList() {
             // Add a clickable check box for the cell data
 
             const itemDisplay = document.createElement('td');
-            console.log(item);
+            console.log(item.nameInput);
             itemDisplay.innerHTML = item.nameInput; 
             // if (item.isCompleted) Add in code for strikethrough css styling;
 
@@ -121,8 +121,7 @@ function clearNewItemForm () {
     const currentForm = document.getElementById('form');
     if (!currentForm) return;
     
-    currentForm.replaceChildren();
-    currentForm.remove()
+    currentForm.reset();
 }
 
 function addNewItem() {
@@ -258,7 +257,6 @@ submitButton.addEventListener('click', function(event) {
     (0,_listInterface_service_js__WEBPACK_IMPORTED_MODULE_0__.clearNewItemForm)();
     (0,_listDisplay_service_js__WEBPACK_IMPORTED_MODULE_1__.clearList)();
 
-    (0,_listInterface_service_js__WEBPACK_IMPORTED_MODULE_0__.createNewItemForm)();
     (0,_listDisplay_service_js__WEBPACK_IMPORTED_MODULE_1__.displayList)();
 })
 

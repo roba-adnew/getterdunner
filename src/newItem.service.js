@@ -2,17 +2,17 @@
 // It should take in a number of parameters such as 
 //      name (r), details (o), tags (r) (which it can take multiple), 
 
-export function newTodo (name) {   
+export function newTodo(todo, details, tags, dueDate) {   
     
-    // add in function parameters for "details" and "tags"
-
-    // let detailsProper = details ? details : '';
     let isCompleted = false;
 
-    // in the return object add in properties for details and tags 
-    // ...details : detailsProper, tags : tags
-
-    return {nameInput : name, isCompleted : isCompleted}
+    return {
+        todo,
+        details, 
+        tags,
+        dueDate,
+        isCompleted
+    }
 } 
 
 export const parentListKeeper = (function () {

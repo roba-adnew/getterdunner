@@ -12,7 +12,7 @@ export function createNewItemForm () {
     const itemExample = newTodo('example');
     for (let key in itemExample) {
 
-        if (key.substring(key.length - 5, key.length) != 'Input') continue; 
+        if (key == 'isCompleted') continue; 
 
         const newItemField = document.createElement(`input`);
         newItemField.setAttribute(`id`, key);
@@ -38,13 +38,17 @@ export function clearNewItemForm () {
     const currentForm = document.getElementById('form');
     if (!currentForm) return;
     
-    currentForm.replaceChildren();
-    currentForm.remove()
+    currentForm.reset();
 }
 
 export function addNewItem() {
     const newItemForm = document.getElementById('form');
-    const newItem = newTodo(newItemForm.nameInput.value);
+    const newItem = newTodo(
+        newItemForm.todo.value,
+        newItemForm.details.value,
+        newItemForm.tags.value,
+        newItemForm.dueDate.value
+    )
     
     parentListKeeper.add(newItem);
     parentListKeeper.print();

@@ -7,23 +7,24 @@ export function displayList() {
     const completedList = [];
     const todoList = []
 
-    for (let item in parentListKeeper.parentList) {
+    for (let i = 0; i < parentListKeeper.parentList.length; i++) {
+        const item = parentListKeeper.parentList[i];
         if (!item.isCompleted) todoList.push(item);
         if (item.isCompleted) completedList.push(item);
     }
 
+    
     const listDisplay = document.createElement('table');
     listDisplay.setAttribute('id','todo-list');
     
     function buildHtmlList(list) {
-        for (let item in list){
+        for (let i = 0; i < list.length; i++){
             const itemRow = document.createElement('tr');
             const checkBox = document.createElement('td');
             // Add a clickable check box for the cell data
 
             const itemDisplay = document.createElement('td');
-            console.log(item);
-            itemDisplay.innerHTML = item.nameInput; 
+            itemDisplay.innerHTML = list[i].todo; 
             // if (item.isCompleted) Add in code for strikethrough css styling;
 
             itemRow.appendChild(checkBox);
