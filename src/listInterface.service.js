@@ -1,4 +1,4 @@
-import { newTodo, parentListKeeper } from './newItem.service';
+import { newTodo, parentList } from './newItem.service';
 
 export function createNewItemForm () {
     
@@ -50,6 +50,5 @@ export function addNewItem() {
         newItemForm.dueDate.value
     )
     
-    parentListKeeper.add(newItem);
-    parentListKeeper.print();
+    parentList.push(newItem);
 }

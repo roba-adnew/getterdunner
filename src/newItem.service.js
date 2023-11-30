@@ -15,14 +15,4 @@ export function newTodo(todo, details, tags, dueDate) {
     }
 } 
 
-export const parentListKeeper = (function () {
-
-    const parentList = [];
-    const add = (item) => parentList.push(item);
-    const remove = (item) => parentList.
-        splice(parentList.indexOf(item),1);
-
-    const print = () => console.table(parentList);
-
-    return {add, remove, print, parentList};
-  })();
+export let parentList = [];

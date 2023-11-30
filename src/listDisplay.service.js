@@ -1,4 +1,4 @@
-import { parentListKeeper } from "./newItem.service";
+import { newTodo, parentList } from "./newItem.service";
 
 // This will export a function that will subdivide any list between things that have been completed and things that have not been completed 
 
@@ -7,8 +7,8 @@ export function displayList() {
     const completedList = [];
     const todoList = []
 
-    for (let i = 0; i < parentListKeeper.parentList.length; i++) {
-        const item = parentListKeeper.parentList[i];
+    for (let i = 0; i < parentList.length; i++) {
+        const item = parentList[i];
         if (!item.isCompleted) todoList.push(item);
         if (item.isCompleted) completedList.push(item);
     }
@@ -20,15 +20,39 @@ export function displayList() {
     function buildHtmlList(list) {
         for (let i = 0; i < list.length; i++){
             const itemRow = document.createElement('tr');
-            const checkBox = document.createElement('td');
-            // Add a clickable check box for the cell data
+            itemRow.className = 'not-completed';
+            const checkBoxCell = document.createElement('td');
+            
+            const checkBox = document.createElement('input');
+            checkBox.type = `checkbox`;
+            checkBox.id = i;
 
-            const itemDisplay = document.createElement('td');
-            itemDisplay.innerHTML = list[i].todo; 
-            // if (item.isCompleted) Add in code for strikethrough css styling;
+            checkBoxCell.append(checkBox);
+            itemRow.appendChild(checkBoxCell);
 
-            itemRow.appendChild(checkBox);
-            itemRow.appendChild(itemDisplay);
+            const itemExample = newTodo();
+            for (let key in itemExample) {
+                if (key == 'isCompleted') continue; 
+                const itemDisplay = document.createElement('td');
+                console.log(list[i].key);
+                itemDisplay.innerHTML = list[i][key]; 
+                // if (item.isCompleted) Add in code for strikethrough css styling;
+                itemRow.appendChild(itemDisplay);
+            }
+
+            checkBox.addEventListener('click', (event) => {
+                event.preventDefault;
+                if (!checkBox.checked) {
+                    list[i]['isCompleted'] = false;
+                    itemRow.className = 'not-completed';
+                }   
+                else {
+                    list[i]['isCompleted'] = true;
+                    itemRow.className = 'completed';
+                };
+                console.table(list[i]);
+            })
+            
             listDisplay.appendChild(itemRow);
         } 
 
