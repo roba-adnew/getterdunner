@@ -1,4 +1,4 @@
-import { newTodo, parentList } from "./newItem.service";
+import { newTodo, parentList, organizeParentList } from "./newItem.service";
 
 // This will export a function that will subdivide any list between things that have been completed and things that have not been completed 
 
@@ -20,7 +20,8 @@ export function displayList() {
     function buildHtmlList(list) {
         for (let i = 0; i < list.length; i++){
             const itemRow = document.createElement('tr');
-            itemRow.className = 'not-completed';
+            itemRow.className = list[i][`isCompleted`] ? "completed" : 
+                "not-completed";
             const checkBoxCell = document.createElement('td');
             
             const checkBox = document.createElement('input');
@@ -42,6 +43,7 @@ export function displayList() {
 
             checkBox.addEventListener('click', (event) => {
                 event.preventDefault;
+
                 if (!checkBox.checked) {
                     list[i]['isCompleted'] = false;
                     itemRow.className = 'not-completed';
@@ -50,7 +52,9 @@ export function displayList() {
                     list[i]['isCompleted'] = true;
                     itemRow.className = 'completed';
                 };
-                console.table(list[i]);
+                console.table(list);
+
+                organizeParentList();
             })
             
             listDisplay.appendChild(itemRow);
