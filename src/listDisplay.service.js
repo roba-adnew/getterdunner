@@ -2,73 +2,74 @@ import { newTodo, parentList, organizeParentList } from "./newItem.service";
 
 // This will export a function that will subdivide any list between things that have been completed and things that have not been completed 
 
-export function displayList() {
-
-    const completedList = [];
-    const todoList = []
-
-    for (let i = 0; i < parentList.length; i++) {
-        const item = parentList[i];
-        if (!item.isCompleted) todoList.push(item);
-        if (item.isCompleted) completedList.push(item);
-    }
-
-    
-    const listDisplay = document.createElement('table');
-    listDisplay.setAttribute('id','todo-list');
-    
-    function buildHtmlList(list) {
-        for (let i = 0; i < list.length; i++){
-            const itemRow = document.createElement('tr');
-            itemRow.className = list[i][`isCompleted`] ? "completed" : 
-                "not-completed";
-            const checkBoxCell = document.createElement('td');
-            
-            const checkBox = document.createElement('input');
-            checkBox.type = `checkbox`;
-            checkBox.id = i;
-
-            checkBoxCell.append(checkBox);
-            itemRow.appendChild(checkBoxCell);
-
-            const itemExample = newTodo();
-            for (let key in itemExample) {
-                if (key == 'isCompleted') continue; 
-                const itemDisplay = document.createElement('td');
-                console.log(list[i].key);
-                itemDisplay.innerHTML = list[i][key]; 
-                // if (item.isCompleted) Add in code for strikethrough css styling;
-                itemRow.appendChild(itemDisplay);
-            }
-
-            checkBox.addEventListener('click', (event) => {
-                event.preventDefault;
-
-                if (!checkBox.checked) {
-                    list[i]['isCompleted'] = false;
-                    itemRow.className = 'not-completed';
-                }   
-                else {
-                    list[i]['isCompleted'] = true;
-                    itemRow.className = 'completed';
-                };
-                console.table(list);
-
-                organizeParentList();
-            })
-            
-            listDisplay.appendChild(itemRow);
-        } 
-
-        return listDisplay;
-    }
-
-    const todoHtml = buildHtmlList(todoList);
-    const completedHTML = buildHtmlList(completedList);
+export function buildListHtmlElements() {
 
     const content = document.getElementById(`content`);
-    content.appendChild(todoHtml);
-    content.appendChild(completedHTML);
+    const listDisplay = document.createElement('table');
+    listDisplay.setAttribute('id','todo-list');
+    content.appendChild(listDisplay);
+    
+    for (let i = 0; i < parentList.length; i++){
+        const itemRow = document.createElement('tr');
+
+        const checkBoxCell = document.createElement('td');
+        const checkBox = document.createElement('input');
+        checkBox.className = `checkbox`;
+        checkBoxCell.append(checkBox);
+        itemRow.appendChild(checkBoxCell);
+
+        checkBox.type = `checkbox`;
+        checkBox.id = parentList[i]['todoID'];
+        if(parentList[i][`isCompleted`]) {
+            checkBox.checked = true;
+            itemRow.className = 'completed'
+        }
+        else {
+            checkBox.checked = false;
+            itemRow.className = 'not-completed'
+        }
+
+        const itemExample = newTodo();
+        for (let key in itemExample) {
+            if (key == 'isCompleted' || key == 'todoID')  continue; 
+            const itemDisplay = document.createElement('td');
+            itemDisplay.innerHTML = parentList[i][key]; 
+            itemRow.appendChild(itemDisplay);
+        }
+        listDisplay.appendChild(itemRow);
+    }
+}
+
+export function setupCheckListeners () {
+
+//     Array.from(document.getElementsByClassName("myElement"))
+//   .forEach((element) => element.style.size = "100px");
+
+    const checkBoxes = document.getElementsByClassName('checkbox');
+    if(!checkBoxes) return;
+
+    Array.from(checkBoxes).forEach((checkBox) => {
+        checkBox.addEventListener('click', (event) => {
+            event.preventDefault;
+
+            const index = parentList.findIndex(
+                todo =>  todo.todoID == checkBox.id);            
+            const itemRow = checkBox.parentElement.parentElement;
+            
+            if (!parentList[index]['isCompleted']) {
+                parentList[index]['isCompleted'] = true;
+                itemRow.className = 'completed';
+            }   
+            else {
+                parentList[index]['isCompleted'] = false;
+                itemRow.className = 'not-completed';  
+            };
+
+            console.table(parentList);
+        
+            organizeParentList();
+        })
+    });   
 }
 
 export function clearList() {

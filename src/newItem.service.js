@@ -1,18 +1,13 @@
+import { v1 as uuidv1 } from 'uuid';
+
 // Create a factory function that creates new to-do items
 // It should take in a number of parameters such as 
 //      name (r), details (o), tags (r) (which it can take multiple), 
 
-export function newTodo(todo, details, tags, dueDate) {   
-    
+export function newTodo(todo, details, tags, dueDate) {    
     let isCompleted = false;
-
-    return {
-        todo,
-        details, 
-        tags,
-        dueDate,
-        isCompleted
-    }
+    let todoID = uuidv1();
+    return { isCompleted, todoID, todo, details, tags, dueDate }
 } 
 
 export let parentList = [];

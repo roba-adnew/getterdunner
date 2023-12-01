@@ -12,7 +12,7 @@ export function createNewItemForm () {
     const itemExample = newTodo('example');
     for (let key in itemExample) {
 
-        if (key == 'isCompleted') continue; 
+        if (key == 'isCompleted' || key == 'todoID') continue; 
 
         const newItemField = document.createElement(`input`);
         newItemField.setAttribute(`id`, key);
