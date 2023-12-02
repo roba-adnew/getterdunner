@@ -9,13 +9,27 @@ export function createNewItemForm () {
     newItemForm.style.cssText = `display: flex; flex-direction: column; 
         flex-basis: 50px; margin: 10px`;
 
-    const itemExample = newTodo('example');
-    for (let key in itemExample) {
+    const todoExample = newTodo('example');
+    for (let key in todoExample) {
 
         if (key == 'isCompleted' || key == 'todoID') continue; 
+        if (key == 'dueDate') {
+            const newItemField = document.createElement('input');
+            newItemForm.appendChild(newItemField);
+            newItemField.type = 'date';
+            newItemField.id = key;
+            continue;
+        };
 
         const newItemField = document.createElement(`input`);
-        newItemField.setAttribute(`id`, key);
+        if (key == 'dueDate') {
+            newItemField.type = 'date';
+            const date = new Date();
+            let today = date.getDate() + 1;
+            newItemField.value = today;
+        }
+        newItemField.id = key;
+        newItemField.placeholder = key;           
         newItemField.style.cssText = `width: 500px` ;
         newItemForm.appendChild(newItemField);
     
