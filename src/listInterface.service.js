@@ -19,6 +19,10 @@ export function createNewItemForm () {
             newItemForm.appendChild(newItemField);
             newItemField.type = 'date';
             newItemField.id = key;
+            const today = new Date;
+            const tomorrow = new Date(); 
+            tomorrow.setDate(today.getDate() + 1);
+            newItemField.value = format(tomorrow, 'yyyy-mm-dd');
             continue;
         };
 
@@ -60,7 +64,8 @@ export function addNewItem() {
     const newItemForm = document.getElementById('form');
 
     const estOffset = 5 * 60 * 60 * 1000;
-    const dueDate = new Date(Date.parse(newItemForm.dueDate.value) + estOffset)
+    const dueDate = new Date(Date.parse(newItemForm.dueDate.value) + estOffset);
+    console.log(dueDate);
 
     const newItem = newTodo(
         newItemForm.todo.value,
