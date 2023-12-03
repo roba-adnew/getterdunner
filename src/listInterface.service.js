@@ -4,9 +4,10 @@ import { format } from 'date-fns';
 export function createNewItemForm () {
     
     const content = document.getElementById(`content`);
-
     const newItemForm = document.createElement(`form`);
-    newItemForm.setAttribute(`id`,`form`);
+    
+    content.appendChild(newItemForm);
+    newItemForm.id = `form`;
     newItemForm.style.cssText = `display: flex; flex-direction: column; 
         flex-basis: 50px; margin: 10px`;
 
@@ -14,43 +15,33 @@ export function createNewItemForm () {
     for (let key in todoExample) {
 
         if (key == 'isCompleted' || key == 'todoID') continue; 
+
+        const newItemField = document.createElement('input');
+        newItemForm.appendChild(newItemField);
+
         if (key == 'dueDate') {
-            const newItemField = document.createElement('input');
-            newItemForm.appendChild(newItemField);
             newItemField.type = 'date';
-            newItemField.id = key;
             const today = new Date;
             const tomorrow = new Date(); 
-            tomorrow.setDate(today.getDate() + 1);
-            newItemField.value = format(tomorrow, 'yyyy-mm-dd');
-            continue;
-        };
-
-        const newItemField = document.createElement(`input`);
-        if (key == 'dueDate') {
-            newItemField.type = 'date';
-            const date = new Date();
-            let today = date.getDate() + 1;
-            newItemField.value = today;
+            tomorrow.setDate(today.getDate());
+            newItemField.value = format(tomorrow, 'yyyy-MM-dd');
+            
         }
-        newItemField.id = key;
-        newItemField.placeholder = key;           
-        newItemField.style.cssText = `width: 500px` ;
-        newItemForm.appendChild(newItemField);
-    
-        const newItemLabel = document.createElement('label');
-        newItemLabel.style.cssText = `width: 100px`;
-        newItemLabel.innerHTML = key;
+        else {
+            newItemField.placeholder = key; 
+            const newItemLabel = document.createElement('label');
+            newItemLabel.innerHTML = key;
+        }
+
+        newItemField.id = key;       
+        newItemField.style.cssText = `width: 500px`;
     }
 
     const submitButton = document.createElement(`button`);
-    submitButton.setAttribute(`id`, `submit-button`)
-    submitButton.innerHTML = `Add New Todo` ;
-    submitButton.style.cssText = `width: 300px` ;
-
     newItemForm.appendChild(submitButton)
-
-    content.appendChild(newItemForm);
+    submitButton.id = `submit-button`;
+    submitButton.innerHTML = `Add New Todo`;
+    submitButton.style.cssText = `width: 300px`;  
 }
 
 export function clearNewItemForm () {

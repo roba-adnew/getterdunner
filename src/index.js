@@ -11,7 +11,10 @@ const submitButton =  document.getElementById('submit-button');
 submitButton.addEventListener('click', function(event) {
     event.preventDefault();
     
-    addNewItem();
+    const todo = document.getElementById('todo');
+    if (todo.value == '') alert('You must fill out the todo field');
+    else {
+        addNewItem();
    
     clearNewItemForm();
     clearList();
@@ -19,6 +22,7 @@ submitButton.addEventListener('click', function(event) {
     organizeParentList();
     buildListHtmlElements();
     setupCheckListeners();
+    }
     
     console.table(parentList)
 })
