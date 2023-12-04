@@ -21,11 +21,7 @@ export function createNewItemForm () {
 
         if (key == 'dueDate') {
             newItemField.type = 'date';
-            const today = new Date;
-            const tomorrow = new Date(); 
-            tomorrow.setDate(today.getDate());
-            newItemField.value = format(tomorrow, 'yyyy-MM-dd');
-            
+            newItemField.value = setDefaultDueDate();   
         }
         else {
             newItemField.placeholder = key; 
@@ -50,6 +46,8 @@ export function clearNewItemForm () {
     if (!currentForm) return;
     
     currentForm.reset();
+    const dateField = document.getElementById('dueDate');
+    dateField.value = setDefaultDueDate();
 }
 
 export function addNewItem() {
@@ -67,4 +65,11 @@ export function addNewItem() {
     )
     
     parentList.push(newItem);
+}
+
+function setDefaultDueDate() {
+    const today = new Date;
+    const tomorrow = new Date(); 
+    tomorrow.setDate(today.getDate());
+    return format(tomorrow, 'yyyy-MM-dd');
 }

@@ -16,13 +16,13 @@ submitButton.addEventListener('click', function(event) {
     else {
         addNewItem();
    
-    clearNewItemForm();
-    clearList();
+        clearNewItemForm();
+        clearList();
 
-    organizeParentList();
-    buildListHtmlElements();
-    setupCheckListeners();
-    }
+        organizeParentList();
+        buildListHtmlElements();
+        setupCheckListeners();
+        }
     
     console.table(parentList)
 })
