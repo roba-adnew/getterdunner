@@ -1,5 +1,5 @@
-import { clearNewItemForm, createNewItemForm, addNewItem } from './listInterface.service.js';
-import { parentList, organizeParentList } from './newItem.service.js'
+import { clearNewItemForm, createNewItemForm } from './listForm.service.js';
+import { organizeParentList, getParentList, addNewItem } from './listManager.service.js'
 import { buildListHtmlElements, clearList, setupCheckListeners } from './listDisplay.service.js';
 import './style.css';
 
@@ -24,5 +24,5 @@ submitButton.addEventListener('click', function(event) {
         setupCheckListeners();
         }
     
-    console.table(parentList)
+    console.table(getParentList())
 })

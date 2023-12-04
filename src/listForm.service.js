@@ -1,4 +1,4 @@
-import { newTodo, parentList } from './newItem.service';
+import { newTodo } from './listManager.service';
 import { format } from 'date-fns'; 
 
 export function createNewItemForm () {
@@ -48,23 +48,6 @@ export function clearNewItemForm () {
     currentForm.reset();
     const dateField = document.getElementById('dueDate');
     dateField.value = setDefaultDueDate();
-}
-
-export function addNewItem() {
-    const newItemForm = document.getElementById('form');
-
-    const estOffset = 5 * 60 * 60 * 1000;
-    const dueDate = new Date(Date.parse(newItemForm.dueDate.value) + estOffset);
-    console.log(dueDate);
-
-    const newItem = newTodo(
-        newItemForm.todo.value,
-        newItemForm.details.value,
-        newItemForm.tags.value,
-        format(dueDate, 'MMM-dd-yyyy')
-    )
-    
-    parentList.push(newItem);
 }
 
 function setDefaultDueDate() {
