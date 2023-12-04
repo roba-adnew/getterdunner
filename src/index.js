@@ -26,4 +26,3 @@ submitButton.addEventListener('click', function(event) {
     
     console.table(parentList)
 })
-

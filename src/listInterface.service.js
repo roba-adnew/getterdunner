@@ -37,11 +37,12 @@ export function createNewItemForm () {
         newItemField.style.cssText = `width: 500px`;
     }
 
-    const submitButton = document.createElement(`button`);
-    newItemForm.appendChild(submitButton)
-    submitButton.id = `submit-button`;
-    submitButton.innerHTML = `Add New Todo`;
-    submitButton.style.cssText = `width: 300px`;  
+    const addButton = document.createElement(`button`);
+    newItemForm.appendChild(addButton)
+    addButton.type = `button`;
+    addButton.id = `submit-button`;
+    addButton.innerHTML = `Add New Todo`;
+    addButton.style.cssText = `width: 300px`;  
 }
 
 export function clearNewItemForm () {
