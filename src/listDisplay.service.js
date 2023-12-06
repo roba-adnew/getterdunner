@@ -1,6 +1,5 @@
 import { getParentList, newTodo, organizeParentList, removeTodo , setParentList } from './listManager.service';
-
-// This will export a function that will subdivide any list between things that have been completed and things that have not been completed 
+import { setDefaultDueDate } from './listForm.service';
 
 export function buildListHtmlElements() {
 
@@ -12,11 +11,11 @@ export function buildListHtmlElements() {
     listDisplay.setAttribute('id','todo-list');
 
     
-    
     for (let i = 0; i < parentList.length; i++){
         const itemRow = document.createElement('tr');
         const checkBoxCell = document.createElement('td');
         itemRow.appendChild(checkBoxCell);
+        itemRow.id = parentList[i]['todoID'];
         const checkBox = document.createElement('input');
         checkBoxCell.append(checkBox);
         
@@ -37,16 +36,28 @@ export function buildListHtmlElements() {
         for (let key in itemExample) {
             if (key == 'isCompleted' || key == 'todoID')  continue; 
             const itemDisplay = document.createElement('td');
+            itemDisplay.className = key;
             itemDisplay.innerHTML = parentList[i][key]; 
             itemRow.appendChild(itemDisplay);
         }
+
+        const editTodoButtonCell = document.createElement('td');
+        itemRow.appendChild(editTodoButtonCell);
+        const editTodoButton = document.createElement('button');
+        editTodoButtonCell.appendChild(editTodoButton);
+        editTodoButton.className = `editor`
+        editTodoButton.type = `button`;
+        editTodoButton.innerHTML = `&#xe3c9`;
+        editTodoButton.addEventListener('click', () => {
+            createEditTodoForm(itemRow);
+        })
 
         const deleteTodoButtonCell = document.createElement('td');
         itemRow.appendChild(deleteTodoButtonCell);
         const deleteTodoButton = document.createElement('button');
         deleteTodoButtonCell.appendChild(deleteTodoButton)
         deleteTodoButton.type = `button`;
-        deleteTodoButton.innerHTML = '&#x2716';
+        deleteTodoButton.innerHTML = `&#x2716`;
         deleteTodoButton.addEventListener('click', () => {
             removeTodo(parentList[i].todoID);
             itemRow.parentElement.removeChild(itemRow);
@@ -79,6 +90,52 @@ export function setupCheckListeners() {
             setupCheckListeners();
         }, false)
     });   
+}
+
+export function createEditTodoForm(itemRow) {
+
+    const itemExample = newTodo();
+    for (let key in itemExample) {
+        if (key == 'isCompleted' || key == 'todoID')  continue; 
+        const itemNode = itemRow.getElementsByClassName(key);
+        const item = Array.from(itemNode)[0];
+
+        const newField = document.createElement('input');
+        newField.id = itemRow.id + '-' + key;
+        if (key == 'dueDate') {
+            newField.type = 'date';
+            newField.value = setDefaultDueDate(); 
+        }
+        itemRow.replaceChild(newField, item)
+    }
+
+    const editButtonNode = itemRow.getElementsByClassName(`editor`);
+    const editButton = Array.from(editButtonNode)[0];
+
+    const submitEditButton = document.createElement('button');
+    submitEditButton.type = `button`;
+    submitEditButton.innerHTML = `&check`;
+    submitEditButton.addEventListener('click', () => {
+        const updatedTodo = document.getElementById(`${itemRow.id}`+'-'+`todo`);
+        const updatedDetails = 
+            document.getElementById(`${itemRow.id}`+'-'+`details`);
+        const updatedTags = document.getElementById(`${itemRow.id}`+'-'+`tags`);
+        const updatedDueDate = 
+            document.getElementById(`${itemRow.id}`+'-'+`dueDate`);
+        
+            const updatedTodoItem = 
+            newTodo(updatedTodo, updatedDetails, updatedTags, updatedDueDate);
+        if (itemRow.className = 'completed') updatedTodoItem.isCompleted = true;
+        removeTodo(itemRow.id);
+        const parentList = getParentList();
+        parentList.push(updatedTodoItem);
+        setParentList(parentList);
+        organizeParentList();
+        clearListElements();
+        buildListHtmlElements();
+    })
+
+    editButton.replaceWith(submitEditButton); 
 }
 
 export function changeCompletionStatus(todoID) {

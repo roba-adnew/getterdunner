@@ -50,7 +50,7 @@ export function clearNewItemForm () {
     dateField.value = setDefaultDueDate();
 }
 
-function setDefaultDueDate() {
+export function setDefaultDueDate() {
     const today = new Date;
     const tomorrow = new Date(); 
     tomorrow.setDate(today.getDate());

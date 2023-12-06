@@ -64,8 +64,7 @@ export function addNewTodo() {
 
 export function removeTodo(todoID) {
     const parentList = getParentList();
-    const index = parentList.findIndex(
-        todo =>  todo.todoID == todoID);
+    const index = parentList.findIndex(todo =>  todo.todoID == todoID);
     parentList.splice(index, 1);
     organizeParentList();
     setParentList(parentList);
