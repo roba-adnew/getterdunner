@@ -1,4 +1,4 @@
-import { newTodo, organizeParentList, getParentList, setParentList } from './listManager.service';
+import { getParentList, newTodo, organizeParentList, removeTodo , setParentList } from './listManager.service';
 
 // This will export a function that will subdivide any list between things that have been completed and things that have not been completed 
 
@@ -40,6 +40,18 @@ export function buildListHtmlElements() {
             itemDisplay.innerHTML = parentList[i][key]; 
             itemRow.appendChild(itemDisplay);
         }
+
+        const deleteTodoButtonCell = document.createElement('td');
+        itemRow.appendChild(deleteTodoButtonCell);
+        const deleteTodoButton = document.createElement('button');
+        deleteTodoButtonCell.appendChild(deleteTodoButton)
+        deleteTodoButton.type = `button`;
+        deleteTodoButton.innerHTML = '&#x2716';
+        deleteTodoButton.addEventListener('click', () => {
+            removeTodo(parentList[i].todoID);
+            itemRow.parentElement.removeChild(itemRow);
+        }) 
+
         listDisplay.appendChild(itemRow);
     }
 }
@@ -90,7 +102,6 @@ export function changeCompletionStatus(todoID) {
         parentList[index]['isCompleted'] = false;
         itemRow.className = 'not-completed';  
     };
-    
     
     setParentList(parentList);
     console.table(getParentList());

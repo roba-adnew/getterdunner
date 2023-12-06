@@ -1,5 +1,5 @@
 import { clearNewItemForm, createNewItemForm } from './listForm.service.js';
-import { organizeParentList, getParentList, addNewItem } from './listManager.service.js'
+import { organizeParentList, getParentList, addNewTodo } from './listManager.service.js'
 import { buildListHtmlElements, clearListElements, setupCheckListeners } from './listDisplay.service.js';
 import './style.css';
 
@@ -14,7 +14,7 @@ submitButton.addEventListener('click', function(event) {
     const todo = document.getElementById('todo');
     if (todo.value == '') alert('You must fill out the todo field');
     else {
-        addNewItem();
+        addNewTodo();
    
         clearNewItemForm();
         clearListElements();

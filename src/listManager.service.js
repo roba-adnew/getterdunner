@@ -41,7 +41,7 @@ export function organizeParentList() {
     setParentList(parentList);
 }
 
-export function addNewItem() {
+export function addNewTodo() {
     const newItemForm = document.getElementById('form');
     if (!newItemForm) return;
 
@@ -60,4 +60,13 @@ export function addNewItem() {
     parentList.push(newItem);
     setParentList(parentList);
     console.table(parentList);
+}
+
+export function removeTodo(todoID) {
+    const parentList = getParentList();
+    const index = parentList.findIndex(
+        todo =>  todo.todoID == todoID);
+    parentList.splice(index, 1);
+    organizeParentList();
+    setParentList(parentList);
 }
