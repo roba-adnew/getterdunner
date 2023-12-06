@@ -37,6 +37,8 @@ export function organizeParentList() {
         if (todo1[`isCompleted`] && !todo2[`isCompleted`]) return 1;
         if (!todo1[`isCompleted`] && todo2[`isCompleted`]) return -1;
     }) 
+
+    setParentList(parentList);
 }
 
 export function addNewItem() {

@@ -44,13 +44,14 @@ export function buildListHtmlElements() {
     }
 }
 
-export function clearList() {
+export function clearListElements() {
     const listDisplay = document.getElementById('todo-list');
     if (listDisplay) {
         listDisplay.replaceChildren();
         listDisplay.remove();
     }
 }
+
 
 export function setupCheckListeners() {
 
@@ -60,7 +61,8 @@ export function setupCheckListeners() {
     Array.from(checkBoxes).forEach((checkBox) => {
         checkBox.addEventListener('click', () => {
             changeCompletionStatus(checkBox.id);
-            checkBox.removeEventListener('click', changeCompletionStatus(checkBox.id), false);
+            clearListElements();
+            organizeParentList();
             buildListHtmlElements();
             setupCheckListeners();
         }, false)
@@ -70,6 +72,7 @@ export function setupCheckListeners() {
 export function changeCompletionStatus(todoID) {
 
     const parentList = getParentList();
+
     const index = parentList.findIndex(
         todo =>  todo.todoID == todoID);
 
@@ -88,8 +91,7 @@ export function changeCompletionStatus(todoID) {
         itemRow.className = 'not-completed';  
     };
     
+    
     setParentList(parentList);
-    clearList();
-    organizeParentList();
     console.table(getParentList());
 }

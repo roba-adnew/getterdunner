@@ -1,6 +1,6 @@
 import { clearNewItemForm, createNewItemForm } from './listForm.service.js';
 import { organizeParentList, getParentList, addNewItem } from './listManager.service.js'
-import { buildListHtmlElements, clearList, setupCheckListeners } from './listDisplay.service.js';
+import { buildListHtmlElements, clearListElements, setupCheckListeners } from './listDisplay.service.js';
 import './style.css';
 
 createNewItemForm();
@@ -17,7 +17,7 @@ submitButton.addEventListener('click', function(event) {
         addNewItem();
    
         clearNewItemForm();
-        clearList();
+        clearListElements();
 
         organizeParentList();
         buildListHtmlElements();
