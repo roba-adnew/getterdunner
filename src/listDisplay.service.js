@@ -88,7 +88,7 @@ export function changeCompletionStatus(todoID) {
         itemRow.className = 'not-completed';  
     };
     
-    setParentList();
+    setParentList(parentList);
     clearList();
     organizeParentList();
     console.table(getParentList());

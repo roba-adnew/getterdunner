@@ -10,7 +10,8 @@ export function newTodo(todo, details, tags, dueDate) {
 const parentListName = 'parentList';
 
 export function setParentList(list) {
-    localStorage.setItem(parentListName, JSON.stringify(list))
+    const jsonList = JSON.stringify(list);
+    localStorage.setItem(parentListName, jsonList)
 }
 
 export function getParentList() {
