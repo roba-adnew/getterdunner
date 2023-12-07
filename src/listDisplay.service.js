@@ -1,5 +1,7 @@
-import { getParentList, newTodo, organizeParentList, removeTodo , setParentList } from './listManager.service';
-import { setDefaultDueDate } from './listForm.service';
+import * as listManagement from './listManager.service';
+Object.entries(listManagement).forEach(([name, exported]) => window[name] = exported);
+import { format } from 'date-fns'; 
+import { getTodoByID } from './listManager.service';
 
 export function buildListHtmlElements() {
 
@@ -32,8 +34,8 @@ export function buildListHtmlElements() {
             itemRow.className = 'not-completed'
         }
 
-        const itemExample = newTodo();
-        for (let key in itemExample) {
+        const todoTemplate = newTodo();
+        for (let key in todoTemplate) {
             if (key == 'isCompleted' || key == 'todoID')  continue; 
             const itemDisplay = document.createElement('td');
             itemDisplay.className = key;
@@ -94,18 +96,19 @@ export function setupCheckListeners() {
 
 export function createEditTodoForm(itemRow) {
 
-    const itemExample = newTodo();
-    for (let key in itemExample) {
+    const currentTodo = getTodoByID(itemRow.id);
+    const todoTemplate = newTodo();
+
+    for (let key in todoTemplate) {
         if (key == 'isCompleted' || key == 'todoID')  continue; 
-        const itemNode = itemRow.getElementsByClassName(key);
-        const item = Array.from(itemNode)[0];
 
         const newField = document.createElement('input');
         newField.id = itemRow.id + '-' + key;
-        if (key == 'dueDate') {
-            newField.type = 'date';
-            newField.value = setDefaultDueDate(); 
-        }
+        newField.value = currentTodo[key];
+        if (key == 'dueDate') newField.type = 'date';
+
+        const itemNode = itemRow.getElementsByClassName(key);
+        const item = Array.from(itemNode)[0];
         itemRow.replaceChild(newField, item)
     }
 
@@ -128,6 +131,7 @@ export function createEditTodoForm(itemRow) {
         const updatedTodoItem = 
             newTodo(updatedTodo, updatedDetails, updatedTags, updatedDueDate);
         if (itemRow.className = 'completed') updatedTodoItem.isCompleted = true;
+        
         removeTodo(itemRow.id);
         const parentList = getParentList();
         parentList.push(updatedTodoItem);

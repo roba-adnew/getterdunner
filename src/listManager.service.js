@@ -26,6 +26,15 @@ export function getParentList() {
     }
 }
 
+export function getTodoByID(todoID) {
+    
+    const parentList = getParentList();
+    const index = parentList.findIndex(
+        todo =>  todo.todoID == todoID);
+    return parentList[index];
+
+}
+
 export function organizeParentList() {
 
     const parentList = getParentList();
