@@ -116,14 +116,16 @@ export function createEditTodoForm(itemRow) {
     submitEditButton.type = `button`;
     submitEditButton.innerHTML = `&check`;
     submitEditButton.addEventListener('click', () => {
-        const updatedTodo = document.getElementById(`${itemRow.id}`+'-'+`todo`);
+        const updatedTodo = 
+            document.getElementById(`${itemRow.id}`+'-'+`todo`).value;
         const updatedDetails = 
-            document.getElementById(`${itemRow.id}`+'-'+`details`);
-        const updatedTags = document.getElementById(`${itemRow.id}`+'-'+`tags`);
+            document.getElementById(`${itemRow.id}`+'-'+`details`).value;
+        const updatedTags = 
+            document.getElementById(`${itemRow.id}`+'-'+`tags`).value;
         const updatedDueDate = 
-            document.getElementById(`${itemRow.id}`+'-'+`dueDate`);
+            document.getElementById(`${itemRow.id}`+'-'+`dueDate`).value;
         
-            const updatedTodoItem = 
+        const updatedTodoItem = 
             newTodo(updatedTodo, updatedDetails, updatedTags, updatedDueDate);
         if (itemRow.className = 'completed') updatedTodoItem.isCompleted = true;
         removeTodo(itemRow.id);
