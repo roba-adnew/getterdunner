@@ -14,23 +14,41 @@ export function createNewItemForm () {
     const todoExample = newTodo('example');
     for (let key in todoExample) {
 
-        if (key == 'isCompleted' || key == 'todoID') continue; 
+        if (key == 'isCompleted' || key == 'todoID') continue;    
 
-        const newItemField = document.createElement('input');
-        newItemForm.appendChild(newItemField);
-
-        if (key == 'dueDate') {
-            newItemField.type = 'date';
-            newItemField.value = setDefaultDueDate();   
-        }
-        else {
+        if (key == 'todo') {
+            const newItemField = document.createElement('input');
+            newItemForm.appendChild(newItemField);
             newItemField.placeholder = key; 
             const newItemLabel = document.createElement('label');
             newItemLabel.innerHTML = key;
+            newItemField.id = key;       
+            newItemField.style.cssText = `width: 500px`;
         }
 
-        newItemField.id = key;       
-        newItemField.style.cssText = `width: 500px`;
+        if (key == 'details' || key == 'tags') {
+            const optionalButton = document.createElement('button');
+            newItemForm.appendChild(optionalButton);
+            optionalButton.type = 'button';
+            optionalButton.innerHTML =  '+ ' + key;
+            optionalButton.addEventListener('click', function() {
+                const newItemField = document.createElement('input');
+                newItemField.placeholder = key; 
+                const newItemLabel = document.createElement('label');
+                newItemLabel.innerHTML = key;
+                newItemField.id = key;       
+                newItemField.style.cssText = `width: 500px`;
+                optionalButton.replaceWith(newItemField);
+            }) 
+        }
+        
+        if (key == 'dueDate') {
+            const newItemField = document.createElement('input');
+            newItemForm.appendChild(newItemField);
+            newItemField.id = key;  
+            newItemField.type = 'date';
+            newItemField.value = setDefaultDueDate();   
+        }
     }
 
     const addButton = document.createElement(`button`);
