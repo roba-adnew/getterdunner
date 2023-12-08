@@ -77,7 +77,6 @@ export function clearListElements() {
     }
 }
 
-
 export function setupCheckListeners() {
 
     const checkBoxes = document.getElementsByClassName('checkbox');
@@ -151,19 +150,16 @@ export function changeCompletionStatus(todoID) {
     const index = parentList.findIndex(
         todo =>  todo.todoID == todoID);
 
-    const itemChild = document.getElementById(todoID);
-    if (!itemChild) return;
-
-    const itemRow = itemChild.parentElement.parentElement;
-    if (!itemRow) return;
+    const todoElement = document.getElementById(todoID);
+    if (!todoElement) return;
     
     if (!parentList[index]['isCompleted']) {
         parentList[index]['isCompleted'] = true;
-        itemRow.className = 'completed';
+        todoElement.className = 'completed';
     }   
     else {
         parentList[index]['isCompleted'] = false;
-        itemRow.className = 'not-completed';  
+        todoElement.className = 'not-completed';  
     };
     
     setParentList(parentList);
