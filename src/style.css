@@ -7,7 +7,10 @@ body {
 }
 
 form {
-    padding: 8px
+    display: flex;
+    width: 420px;
+    padding: 8px;
+    border: 1px solid black
 }
 
 table {
@@ -20,5 +23,40 @@ table {
 th, td {
     border: 1px solid black;
     padding: 8px;
-
   }
+
+td.todo, td.details {
+    width: 200px;
+}
+
+.optional {
+    width: 70px;
+    margin-left: 10px;
+}
+
+input {
+    display: inline-block;
+}
+
+input#todo, input#dueDate{
+    display: inline-block;
+    width: 400px;
+    margin: 5px;
+    margin-right: 0px;
+}
+
+input#details {
+    width: 400px;
+    height: 30px;
+    margin: 5px;
+    margin-right: 0px;
+    
+}
+
+button#add {
+    align-self: center;
+    background-color: black;
+    color: white;
+    margin: 5px;
+    margin-right: 0px;
+}

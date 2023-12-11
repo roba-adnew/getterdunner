@@ -6,8 +6,8 @@ import './style.css';
 createNewItemForm();
 buildListHtmlElements();
 
-const submitButton =  document.getElementById('submit-button');
-submitButton.addEventListener('click', function(event) {
+const addButton =  document.getElementById('add');
+addButton.addEventListener('click', function(event) {
     event.preventDefault();
     
     const todo = document.getElementById('todo');

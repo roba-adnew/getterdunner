@@ -4,15 +4,38 @@ import { format } from 'date-fns';
 import { getTodoByID } from './listManager.service';
 
 export function buildListHtmlElements() {
-
-    const parentList = getParentList();
-
     const content = document.getElementById(`content`);
+    const title = document.createElement('h3');
+    title.innerHTML = `wut we gotta get dunn`;
+    content.appendChild(title);
     const listDisplay = document.createElement('table');
     content.appendChild(listDisplay);
     listDisplay.setAttribute('id','todo-list');
 
+    const parentList = getParentList();
+    const todoExample = newTodo();
+    const headerRow = document.createElement(`tr`);
+    listDisplay.appendChild(headerRow);
+    for (let key in todoExample) {
+        if (key == `todoID`) continue;
+        const headerCell = document.createElement(`th`);
+        switch (key) {
+            case `isCompleted`: headerCell.innerHTML = `dunn?`; break;
+            case `todo`: headerCell.innerHTML = `wut wer doin`; break;
+            case `details`: headerCell.innerHTML = `the other stuf`; break;
+            case `dueDate`: headerCell.innerHTML = `wen we gotta do it`; break;
+        }
+        headerRow.appendChild(headerCell);
+    }
+    const editHeader = document.createElement(`th`);
+    editHeader.innerHTML = `&#9998`;
+    headerRow.appendChild(editHeader);
+
+    const deleteHeader = document.createElement(`th`);
+    deleteHeader.innerHTML = `&#x2716`;
+    headerRow.appendChild(deleteHeader);
     
+
     for (let i = 0; i < parentList.length; i++){
         const itemRow = document.createElement('tr');
         const checkBoxCell = document.createElement('td');
