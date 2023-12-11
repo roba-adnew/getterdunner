@@ -108,7 +108,7 @@ export function clearListElements() {
     }
 }
 
-export function setupCheckListeners() {
+function setupCheckListeners() {
 
     const checkBoxes = document.getElementsByClassName('checkbox');
     if(!checkBoxes) return;
@@ -123,7 +123,7 @@ export function setupCheckListeners() {
     });   
 }
 
-export function createEditTodoForm(itemRow) {
+function createEditTodoForm(itemRow) {
 
     const currentTodo = getTodoByID(itemRow.id);
     const todoTemplate = newTodo();
@@ -167,7 +167,7 @@ export function createEditTodoForm(itemRow) {
     editButton.replaceWith(submitEditButton); 
 }
 
-export function changeCompletionStatus(todoID) {
+function changeCompletionStatus(todoID) {
 
     const parentList = getParentList();
 
