@@ -6,6 +6,7 @@ import { getTodoByID } from './listManager.service';
 export function buildListHtmlElements() {
     const content = document.getElementById(`content`);
     const title = document.createElement('h3');
+    title.id = 'listHeader';
     title.innerHTML = `wut we gotta get dunn`;
     content.appendChild(title);
     const listDisplay = document.createElement('table');
@@ -81,7 +82,13 @@ export function buildListHtmlElements() {
         editTodoButton.type = `button`;
         editTodoButton.innerHTML = `&#9998`;
         editTodoButton.addEventListener('click', () => {
-            createEditTodoForm(itemRow);
+            if (editTodoButtonCell.parentNode.className == 'completed') {
+                alert(`You can only edit items that haven't been completed`);
+            }
+            else {
+                createEditTodoForm(itemRow);
+            }
+            
         })
 
         const deleteTodoButtonCell = document.createElement('td');
@@ -102,9 +109,13 @@ export function buildListHtmlElements() {
 
 export function clearListElements() {
     const listDisplay = document.getElementById('todo-list');
+    const listHeader = document.getElementById(`listHeader`)
     if (listDisplay) {
         listDisplay.replaceChildren();
         listDisplay.remove();
+    }
+    if(listHeader) {
+        listHeader.remove();
     }
 }
 
