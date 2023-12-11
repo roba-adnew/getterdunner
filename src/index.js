@@ -6,19 +6,3 @@ import './style.css';
 createNewItemForm();
 buildListHtmlElements();
 
-const addButton =  document.getElementById('add');
-addButton.addEventListener('click', function(event) {
-    event.preventDefault();
-    
-    const todo = document.getElementById('todo');
-    if (todo.value == '') alert('You must fill out the todo field');
-    else {
-        addNewTodo();
-   
-        clearNewItemForm();
-        clearListElements();
-
-        organizeParentList();
-        buildListHtmlElements();
-        }
-})

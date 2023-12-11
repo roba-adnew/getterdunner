@@ -8,11 +8,9 @@ export function newTodo(todo, details, dueDate) {
     return { isCompleted, todoID, todo, details, dueDate }
 } 
 
-const parentListName = 'parentList';
-
 export function setParentList(list) {
     const jsonList = JSON.stringify(list);
-    localStorage.setItem(parentListName, jsonList)
+    localStorage.setItem('parentList', jsonList);
 }
 
 export function getParentList() {
@@ -21,7 +19,7 @@ export function getParentList() {
         return newList;
     }
     else {
-         const currentListJSON = localStorage.getItem(parentListName);
+         const currentListJSON = localStorage.getItem('parentList');
          let storedList = JSON.parse(currentListJSON)
          return storedList;
     }
@@ -46,7 +44,6 @@ export function organizeParentList() {
         if (todo1[`isCompleted`] && !todo2[`isCompleted`]) return 1;
         if (!todo1[`isCompleted`] && todo2[`isCompleted`]) return -1;
     }) 
-
     setParentList(parentList);
 }
 
@@ -67,7 +64,6 @@ export function addNewTodo() {
     const parentList = getParentList();
     parentList.push(newItem);
     setParentList(parentList);
-    console.table(parentList);
 }
 
 export function correctDateOffset(date) {

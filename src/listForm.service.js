@@ -1,4 +1,5 @@
-import { newTodo } from './listManager.service';
+import { newTodo, organizeParentList } from './listManager.service';
+import { buildListHtmlElements, clearListElements } from './listDisplay.service';
 import { format } from 'date-fns'; 
 
 export function createNewItemForm () {
@@ -45,7 +46,7 @@ export function createNewItemForm () {
             newItemForm.appendChild(newItemField);
             newItemField.id = key;  
             newItemField.type = 'date';
-            newItemField.value = `setDefaultDueDate(); `  
+            newItemField.value = setDefaultDueDate();   
         }
     }
 
@@ -55,6 +56,23 @@ export function createNewItemForm () {
     addButton.id = `add`;
     addButton.innerHTML = `Add New Todo`;
     addButton.style.cssText = `width: 300px`;  
+
+
+    addButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    const todo = document.getElementById('todo');
+    if (todo.value == '') alert('You must fill out the todo field');
+    else {
+        addNewTodo();
+   
+        clearNewItemForm();
+        clearListElements();
+
+        organizeParentList();
+        buildListHtmlElements();
+        }
+})
 }
 
 export function clearNewItemForm () {

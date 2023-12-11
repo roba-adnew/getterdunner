@@ -1,9 +1,10 @@
 import * as listManagement from './listManager.service';
-Object.entries(listManagement).forEach(([name, exported]) => window[name] = exported); // 
+Object.entries(listManagement).forEach(([name, exported]) => window[name] = exported); 
 import { format } from 'date-fns'; 
 import { getTodoByID } from './listManager.service';
 
 export function buildListHtmlElements() {
+    // Creating the title and header row for the list 
     const content = document.getElementById(`content`);
     const title = document.createElement('h3');
     title.id = 'listHeader';
@@ -37,6 +38,7 @@ export function buildListHtmlElements() {
     headerRow.appendChild(deleteHeader);
     
 
+    // Creating elements to display todo item details
     for (let i = 0; i < parentList.length; i++){
         const itemRow = document.createElement('tr');
         const checkBoxCell = document.createElement('td');
@@ -74,6 +76,7 @@ export function buildListHtmlElements() {
             itemRow.appendChild(itemDisplay);
         }
 
+        // Creating the edit and delete buttons for each todo item
         const editTodoButtonCell = document.createElement('td');
         itemRow.appendChild(editTodoButtonCell);
         const editTodoButton = document.createElement('button');
@@ -88,7 +91,6 @@ export function buildListHtmlElements() {
             else {
                 createEditTodoForm(itemRow);
             }
-            
         })
 
         const deleteTodoButtonCell = document.createElement('td');
@@ -120,7 +122,7 @@ export function clearListElements() {
 }
 
 function setupCheckListeners() {
-
+    // Sets up the event listeners that check if todo item completion has been 
     const checkBoxes = document.getElementsByClassName('checkbox');
     if(!checkBoxes) return;
 
@@ -179,6 +181,7 @@ function createEditTodoForm(itemRow) {
 }
 
 function changeCompletionStatus(todoID) {
+    // Updates todo item completion status in the parent list 
 
     const parentList = getParentList();
 
@@ -198,5 +201,5 @@ function changeCompletionStatus(todoID) {
     };
     
     setParentList(parentList);
-    console.table(getParentList());
+    organizeParentList();
 }
