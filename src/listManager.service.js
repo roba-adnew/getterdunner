@@ -1,10 +1,10 @@
 import { v1 as uuidv1 } from 'uuid';
 import { format } from 'date-fns'; 
 
-export function newTodo(todo, details, tags, dueDate) {    
+export function newTodo(todo, details, dueDate) {    
     let isCompleted = false;
     let todoID = uuidv1();
-    return { isCompleted, todoID, todo, details, tags, dueDate }
+    return { isCompleted, todoID, todo, details, dueDate }
 } 
 
 const parentListName = 'parentList';
@@ -27,7 +27,6 @@ export function getParentList() {
 }
 
 export function getTodoByID(todoID) {
-    
     const parentList = getParentList();
     const index = parentList.findIndex(
         todo =>  todo.todoID == todoID);
@@ -61,7 +60,6 @@ export function addNewTodo() {
     const newItem = newTodo(
         newItemForm.todo.value,
         newItemForm.details.value,
-        newItemForm.tags.value,
         format(dueDate, 'MMM-dd-yyyy')
     )
     
@@ -71,10 +69,11 @@ export function addNewTodo() {
     console.table(parentList);
 }
 
-export function removeTodo(todoID) {
+export function updateTodo(todoID, updatedTodoItem) {
     const parentList = getParentList();
     const index = parentList.findIndex(todo =>  todo.todoID == todoID);
     parentList.splice(index, 1);
-    organizeParentList();
+    parentList.push(updatedTodoItem);
     setParentList(parentList);
+    organizeParentList();
 }

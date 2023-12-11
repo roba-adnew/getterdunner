@@ -1,5 +1,5 @@
 import * as listManagement from './listManager.service';
-Object.entries(listManagement).forEach(([name, exported]) => window[name] = exported);
+Object.entries(listManagement).forEach(([name, exported]) => window[name] = exported); // 
 import { format } from 'date-fns'; 
 import { getTodoByID } from './listManager.service';
 
@@ -49,7 +49,7 @@ export function buildListHtmlElements() {
         editTodoButtonCell.appendChild(editTodoButton);
         editTodoButton.className = `editor`
         editTodoButton.type = `button`;
-        editTodoButton.innerHTML = `&#xe3c9`;
+        editTodoButton.innerHTML = `&#9998`;
         editTodoButton.addEventListener('click', () => {
             createEditTodoForm(itemRow);
         })
@@ -116,26 +116,20 @@ export function createEditTodoForm(itemRow) {
 
     const submitEditButton = document.createElement('button');
     submitEditButton.type = `button`;
-    submitEditButton.innerHTML = `&check`;
+    submitEditButton.innerHTML = `&#x2713`;
     submitEditButton.addEventListener('click', () => {
-        const updatedTodo = 
-            document.getElementById(`${itemRow.id}`+'-'+`todo`).value;
-        const updatedDetails = 
-            document.getElementById(`${itemRow.id}`+'-'+`details`).value;
-        const updatedTags = 
-            document.getElementById(`${itemRow.id}`+'-'+`tags`).value;
-        const updatedDueDate = 
-            document.getElementById(`${itemRow.id}`+'-'+`dueDate`).value;
         
-        const updatedTodoItem = 
-            newTodo(updatedTodo, updatedDetails, updatedTags, updatedDueDate);
+        const idStr = `${itemRow.id}`+'-';
+        
+        const updatedTodo = document.getElementById(idStr + `todo`).value;
+        const updatedDetails = document.getElementById(idStr + `details`).value;
+        const updatedDueDate = document.getElementById(idStr + `dueDate`).value;
+        
+        const updatedTodoItem = newTodo(updatedTodo, updatedDetails, updatedDueDate);
+
         if (itemRow.className = 'completed') updatedTodoItem.isCompleted = true;
         
-        removeTodo(itemRow.id);
-        const parentList = getParentList();
-        parentList.push(updatedTodoItem);
-        setParentList(parentList);
-        organizeParentList();
+        updatedTodo(itemRow.id, updatedTodoItem)
         clearListElements();
         buildListHtmlElements();
     })

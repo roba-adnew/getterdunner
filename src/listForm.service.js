@@ -26,7 +26,7 @@ export function createNewItemForm () {
             newItemField.style.cssText = `width: 500px`;
         }
 
-        if (key == 'details' || key == 'tags') {
+        if (key == 'details') {
             const optionalButton = document.createElement('button');
             newItemForm.appendChild(optionalButton);
             optionalButton.type = 'button';
