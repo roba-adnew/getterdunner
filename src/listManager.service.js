@@ -2,8 +2,9 @@ import { v1 as uuidv1 } from 'uuid';
 import { format } from 'date-fns'; 
 
 export function newTodo(todo, details, dueDate) {    
+
     let isCompleted = false;
-    let todoID = uuidv1();
+    const todoID = uuidv1();
     return { isCompleted, todoID, todo, details, dueDate }
 } 
 
@@ -52,15 +53,15 @@ export function organizeParentList() {
 export function addNewTodo() {
     const newItemForm = document.getElementById('form');
     if (!newItemForm) return;
+    const details = !newItemForm.details ? '' : newItemForm.details.value;
 
-    const estOffset = 5 * 60 * 60 * 1000;
-    const dueDate = new Date(Date.parse(newItemForm.dueDate.value) + estOffset);
-    console.log(dueDate);
+    let dueDate = correctDateOffset(newItemForm.dueDate.value);
+    dueDate = format(dueDate, 'YYY-MM-dd');
 
     const newItem = newTodo(
         newItemForm.todo.value,
-        newItemForm.details.value,
-        format(dueDate, 'MMM-dd-yyyy')
+        details,
+        dueDate
     )
     
     const parentList = getParentList();
@@ -69,10 +70,23 @@ export function addNewTodo() {
     console.table(parentList);
 }
 
-export function updateTodo(todoID, updatedTodoItem) {
+export function correctDateOffset(date) {
+    const estOffset = 5 * 60 * 60 * 1000;
+    const correctedDate = new Date(Date.parse(date) + estOffset);
+    return correctedDate;
+}
+
+export function removeTodo(todoID) {
     const parentList = getParentList();
     const index = parentList.findIndex(todo =>  todo.todoID == todoID);
     parentList.splice(index, 1);
+    setParentList(parentList);
+    organizeParentList();
+};
+
+export function updateTodo(todoID, updatedTodoItem) {
+    removeTodo(todoID);
+    const parentList = getParentList()
     parentList.push(updatedTodoItem);
     setParentList(parentList);
     organizeParentList();

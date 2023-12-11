@@ -23,6 +23,4 @@ submitButton.addEventListener('click', function(event) {
         buildListHtmlElements();
         setupCheckListeners();
         }
-    
-    console.table(getParentList())
 })

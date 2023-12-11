@@ -39,7 +39,14 @@ export function buildListHtmlElements() {
             if (key == 'isCompleted' || key == 'todoID')  continue; 
             const itemDisplay = document.createElement('td');
             itemDisplay.className = key;
-            itemDisplay.innerHTML = parentList[i][key]; 
+            const value = parentList[i][key];
+            if (key == 'dueDate') {
+                const correctedDate = correctDateOffset(value);
+                itemDisplay.innerHTML = format(correctedDate, 'MMM-dd-yyyy') 
+            }
+            else {
+                itemDisplay.innerHTML = value;
+            }
             itemRow.appendChild(itemDisplay);
         }
 
@@ -129,7 +136,8 @@ export function createEditTodoForm(itemRow) {
 
         if (itemRow.className = 'completed') updatedTodoItem.isCompleted = true;
         
-        updatedTodo(itemRow.id, updatedTodoItem)
+        updateTodo(itemRow.id, updatedTodoItem)
+        console.table(listManagement.getParentList());
         clearListElements();
         buildListHtmlElements();
     })
