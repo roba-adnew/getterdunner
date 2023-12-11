@@ -170,7 +170,7 @@ function createEditTodoForm(itemRow) {
         
         const updatedTodoItem = newTodo(updatedTodo, updatedDetails, updatedDueDate);
 
-        if (itemRow.className = 'completed') updatedTodoItem.isCompleted = true;
+        if (itemRow.className == 'completed') updatedTodoItem.isCompleted = true;
         
         updateTodo(itemRow.id, updatedTodoItem);
         clearListElements();
