@@ -125,10 +125,9 @@ function setupCheckListeners() {
 
 function createEditTodoForm(itemRow) {
 
-    const currentTodo = getTodoByID(itemRow.id);
-    const todoTemplate = newTodo();
+    const currentTodo = getTodoByID(itemRow.id)
 
-    for (let key in todoTemplate) {
+    for (let key in currentTodo) {
         if (key == 'isCompleted' || key == 'todoID')  continue; 
 
         const newField = document.createElement('input');
@@ -138,7 +137,8 @@ function createEditTodoForm(itemRow) {
 
         const itemNode = itemRow.getElementsByClassName(key);
         const item = Array.from(itemNode)[0];
-        itemRow.replaceChild(newField, item)
+        item.innerHTML = '';
+        item.appendChild(newField);
     }
 
     const editButtonNode = itemRow.getElementsByClassName(`editor`);
