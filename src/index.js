@@ -5,7 +5,6 @@ import './style.css';
 
 createNewItemForm();
 buildListHtmlElements();
-setupCheckListeners();
 
 const submitButton =  document.getElementById('submit-button');
 submitButton.addEventListener('click', function(event) {
@@ -21,6 +20,5 @@ submitButton.addEventListener('click', function(event) {
 
         organizeParentList();
         buildListHtmlElements();
-        setupCheckListeners();
         }
 })

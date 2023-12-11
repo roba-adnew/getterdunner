@@ -74,6 +74,7 @@ export function buildListHtmlElements() {
 
         listDisplay.appendChild(itemRow);
     }
+    setupCheckListeners();
 }
 
 export function clearListElements() {
@@ -95,7 +96,6 @@ export function setupCheckListeners() {
             clearListElements();
             organizeParentList();
             buildListHtmlElements();
-            setupCheckListeners();
         }, false)
     });   
 }
@@ -136,8 +136,7 @@ export function createEditTodoForm(itemRow) {
 
         if (itemRow.className = 'completed') updatedTodoItem.isCompleted = true;
         
-        updateTodo(itemRow.id, updatedTodoItem)
-        console.table(listManagement.getParentList());
+        updateTodo(itemRow.id, updatedTodoItem);
         clearListElements();
         buildListHtmlElements();
     })
