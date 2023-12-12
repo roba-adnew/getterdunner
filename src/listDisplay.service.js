@@ -5,13 +5,12 @@ import { getTodoByID } from './listManager.service';
 
 export function buildListHtmlElements() {
     // Creating the title and header row for the list 
-    const content = document.getElementById(`content`);
     const title = document.createElement('h3');
     title.id = 'listHeader';
     title.innerHTML = `wut we gotta get dunn`;
-    content.appendChild(title);
+    document.body.appendChild(title);
     const listDisplay = document.createElement('table');
-    content.appendChild(listDisplay);
+    document.body.appendChild(listDisplay);
     listDisplay.setAttribute('id','todo-list');
 
     const headerRow = document.createElement(`tr`);

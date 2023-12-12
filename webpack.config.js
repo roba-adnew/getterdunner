@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: "development", //accounted for 
@@ -23,4 +24,11 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Getter Dunner',
+      filename: 'index.html',
+      inject: 'body',
+    })
+  ]
 };

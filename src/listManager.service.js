@@ -75,7 +75,7 @@ export function removeTodo(todoID) {
     parentList.splice(index, 1);
     setParentList(parentList);
     organizeParentList();
-};
+}
 
 export function updateTodo(todoID, updatedTodoItem) {
     removeTodo(todoID);

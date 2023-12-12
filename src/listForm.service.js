@@ -3,12 +3,10 @@ import { buildListHtmlElements, clearListElements } from './listDisplay.service'
 import { format } from 'date-fns'; 
 
 export function createNewItemForm () {
-    
-    const content = document.getElementById(`content`);
     const title = document.createElement('h3');
-    content.appendChild(title);
+    document.body.appendChild(title);
     const newItemForm = document.createElement(`form`);
-    content.appendChild(newItemForm);
+    document.body.appendChild(newItemForm);
 
     title.innerHTML = `lets getter dunn`;
     
