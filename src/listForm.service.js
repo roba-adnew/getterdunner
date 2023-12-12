@@ -6,14 +6,13 @@ export function createNewItemForm () {
     
     const content = document.getElementById(`content`);
     const title = document.createElement('h3');
-    title.innerHTML = `lets getter dunn`;
     content.appendChild(title);
     const newItemForm = document.createElement(`form`);
     content.appendChild(newItemForm);
 
+    title.innerHTML = `lets getter dunn`;
+    
     newItemForm.id = `form`;
-    newItemForm.style.cssText = `display: flex; flex-direction: column; 
-        flex-basis: 50px; margin: 10px`;
 
     const todoExample = newTodo('example');
     for (let key in todoExample) {
@@ -57,25 +56,22 @@ export function createNewItemForm () {
     addButton.innerHTML = `Add New Todo`;
     addButton.style.cssText = `width: 300px`;  
 
-
     addButton.addEventListener('click', function(event) {
-    event.preventDefault();
+        const todo = document.getElementById('todo');
+        if (todo.value == '') alert('You must fill out the todo field');
+        else {
+            addNewTodo();
     
-    const todo = document.getElementById('todo');
-    if (todo.value == '') alert('You must fill out the todo field');
-    else {
-        addNewTodo();
-   
-        clearNewItemForm();
-        clearListElements();
+            resetNewItemForm();
+            clearListElements();
 
-        organizeParentList();
-        buildListHtmlElements();
-        }
-})
+            organizeParentList();
+            buildListHtmlElements();
+            }
+    })
 }
 
-export function clearNewItemForm () {
+function resetNewItemForm () {
     const currentForm = document.getElementById('form');
     if (!currentForm) return;
     

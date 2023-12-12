@@ -5,4 +5,3 @@ import './style.css';
 
 createNewItemForm();
 buildListHtmlElements();
-

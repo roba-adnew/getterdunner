@@ -14,10 +14,10 @@ export function buildListHtmlElements() {
     content.appendChild(listDisplay);
     listDisplay.setAttribute('id','todo-list');
 
-    const parentList = getParentList();
-    const todoExample = newTodo();
     const headerRow = document.createElement(`tr`);
     listDisplay.appendChild(headerRow);
+
+    const todoExample = newTodo();
     for (let key in todoExample) {
         if (key == `todoID`) continue;
         const headerCell = document.createElement(`th`);
@@ -39,6 +39,7 @@ export function buildListHtmlElements() {
     
 
     // Creating elements to display todo item details
+    const parentList = getParentList();
     for (let i = 0; i < parentList.length; i++){
         const itemRow = document.createElement('tr');
         const checkBoxCell = document.createElement('td');
@@ -60,9 +61,9 @@ export function buildListHtmlElements() {
             itemRow.className = 'not-completed'
         }
 
-        const todoTemplate = newTodo();
-        for (let key in todoTemplate) {
+        for (let key in parentList[i]) {
             if (key == 'isCompleted' || key == 'todoID')  continue; 
+            
             const itemDisplay = document.createElement('td');
             itemDisplay.className = key;
             const value = parentList[i][key];
@@ -101,11 +102,12 @@ export function buildListHtmlElements() {
         deleteTodoButton.innerHTML = `&#x2716`;
         deleteTodoButton.addEventListener('click', () => {
             removeTodo(parentList[i].todoID);
-            itemRow.parentElement.removeChild(itemRow);
+            itemRow.remove();
         }) 
 
         listDisplay.appendChild(itemRow);
     }
+    // Enable the event listeners checking for checkbox toggling 
     setupCheckListeners();
 }
 
@@ -132,37 +134,39 @@ function setupCheckListeners() {
             clearListElements();
             organizeParentList();
             buildListHtmlElements();
-        }, false)
+        })
     });   
 }
 
 function createEditTodoForm(itemRow) {
 
-    const currentTodo = getTodoByID(itemRow.id)
+    const todoID = itemRow.id;
+    const currentTodo = getTodoByID(todoID)
 
     for (let key in currentTodo) {
         if (key == 'isCompleted' || key == 'todoID')  continue; 
 
         const newField = document.createElement('input');
-        newField.id = itemRow.id + '-' + key;
+        newField.id = todoID + '-' + key;
         newField.value = currentTodo[key];
         if (key == 'dueDate') newField.type = 'date';
 
         const itemNode = itemRow.getElementsByClassName(key);
         const item = Array.from(itemNode)[0];
-        item.innerHTML = '';
+        item.innerHTML = ''; 
         item.appendChild(newField);
     }
 
     const editButtonNode = itemRow.getElementsByClassName(`editor`);
     const editButton = Array.from(editButtonNode)[0];
-
     const submitEditButton = document.createElement('button');
+    editButton.replaceWith(submitEditButton); 
+
     submitEditButton.type = `button`;
     submitEditButton.innerHTML = `&#x2713`;
     submitEditButton.addEventListener('click', () => {
         
-        const idStr = `${itemRow.id}`+'-';
+        const idStr = `${todoID}`+'-';
         
         const updatedTodo = document.getElementById(idStr + `todo`).value;
         const updatedDetails = document.getElementById(idStr + `details`).value;
@@ -172,21 +176,17 @@ function createEditTodoForm(itemRow) {
 
         if (itemRow.className == 'completed') updatedTodoItem.isCompleted = true;
         
-        updateTodo(itemRow.id, updatedTodoItem);
+        updateTodo(todoID, updatedTodoItem);
         clearListElements();
         buildListHtmlElements();
     })
-
-    editButton.replaceWith(submitEditButton); 
 }
 
 function changeCompletionStatus(todoID) {
     // Updates todo item completion status in the parent list 
-
     const parentList = getParentList();
 
-    const index = parentList.findIndex(
-        todo =>  todo.todoID == todoID);
+    const index = parentList.findIndex(todo => todo.todoID == todoID);
 
     const todoElement = document.getElementById(todoID);
     if (!todoElement) return;

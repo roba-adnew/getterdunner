@@ -30,14 +30,12 @@ export function getTodoByID(todoID) {
     const index = parentList.findIndex(
         todo =>  todo.todoID == todoID);
     return parentList[index];
-
 }
 
 export function organizeParentList() {
 
     const parentList = getParentList();
     parentList.sort(function(todo1, todo2) {
-
         if (!todo1 || !todo2) return;
 
         if (todo1[`isCompleted`] && todo2[`isCompleted`]) return 0;
@@ -50,20 +48,19 @@ export function organizeParentList() {
 export function addNewTodo() {
     const newItemForm = document.getElementById('form');
     if (!newItemForm) return;
+
+    const todo = newItemForm.todo.value; 
     const details = !newItemForm.details ? '' : newItemForm.details.value;
 
     let dueDate = correctDateOffset(newItemForm.dueDate.value);
     dueDate = format(dueDate, 'YYY-MM-dd');
 
-    const newItem = newTodo(
-        newItemForm.todo.value,
-        details,
-        dueDate
-    )
+    const newItem = newTodo(todo, details, dueDate);
     
     const parentList = getParentList();
     parentList.push(newItem);
     setParentList(parentList);
+    organizeParentList();
 }
 
 export function correctDateOffset(date) {
