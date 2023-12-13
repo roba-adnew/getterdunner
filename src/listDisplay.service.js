@@ -1,5 +1,4 @@
-import * as listManagement from './listManager.service';
-Object.entries(listManagement).forEach(([name, exported]) => window[name] = exported); 
+import * as listManagement from './listManager.service'; 
 import { format } from 'date-fns'; 
 import { getTodoByID } from './listManager.service';
 
@@ -16,7 +15,7 @@ export function buildListHtmlElements() {
     const headerRow = document.createElement(`tr`);
     listDisplay.appendChild(headerRow);
 
-    const todoExample = newTodo();
+    const todoExample = listManagement.newTodo();
     for (let key in todoExample) {
         if (key == `todoID`) continue;
         const headerCell = document.createElement(`th`);
@@ -38,7 +37,7 @@ export function buildListHtmlElements() {
     
 
     // Creating elements to display todo item details
-    const parentList = getParentList();
+    const parentList = listManagement.getParentList();
     for (let i = 0; i < parentList.length; i++){
         const itemRow = document.createElement('tr');
         const checkBoxCell = document.createElement('td');
@@ -67,7 +66,7 @@ export function buildListHtmlElements() {
             itemDisplay.className = key;
             const value = parentList[i][key];
             if (key == 'dueDate') {
-                const correctedDate = correctDateOffset(value);
+                const correctedDate = listManagement.correctDateOffset(value);
                 itemDisplay.innerHTML = format(correctedDate, 'MMM-dd-yyyy') 
             }
             else {
@@ -100,7 +99,7 @@ export function buildListHtmlElements() {
         deleteTodoButton.type = `button`;
         deleteTodoButton.innerHTML = `&#x2716`;
         deleteTodoButton.addEventListener('click', () => {
-            removeTodo(parentList[i].todoID);
+            listManagement.removeTodo(parentList[i].todoID);
             itemRow.remove();
         }) 
 
@@ -131,7 +130,7 @@ function setupCheckListeners() {
         checkBox.addEventListener('click', () => {
             changeCompletionStatus(checkBox.id);
             clearListElements();
-            organizeParentList();
+            listManagement.organizeParentList();
             buildListHtmlElements();
         })
     });   
@@ -171,11 +170,11 @@ function createEditTodoForm(itemRow) {
         const updatedDetails = document.getElementById(idStr + `details`).value;
         const updatedDueDate = document.getElementById(idStr + `dueDate`).value;
         
-        const updatedTodoItem = newTodo(updatedTodo, updatedDetails, updatedDueDate);
+        const updatedTodoItem = listManagement.newTodo(updatedTodo, updatedDetails, updatedDueDate);
 
         if (itemRow.className == 'completed') updatedTodoItem.isCompleted = true;
         
-        updateTodo(todoID, updatedTodoItem);
+        listManagement.updateTodo(todoID, updatedTodoItem);
         clearListElements();
         buildListHtmlElements();
     })
@@ -183,7 +182,7 @@ function createEditTodoForm(itemRow) {
 
 function changeCompletionStatus(todoID) {
     // Updates todo item completion status in the parent list 
-    const parentList = getParentList();
+    const parentList = listManagement.getParentList();
 
     const index = parentList.findIndex(todo => todo.todoID == todoID);
 
@@ -199,6 +198,6 @@ function changeCompletionStatus(todoID) {
         todoElement.className = 'not-completed';  
     };
     
-    setParentList(parentList);
-    organizeParentList();
+    listManagement.setParentList(parentList);
+    listManagement.organizeParentList();
 }

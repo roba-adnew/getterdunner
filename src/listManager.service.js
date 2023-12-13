@@ -1,5 +1,4 @@
 import { v1 as uuidv1 } from 'uuid';
-import { format } from 'date-fns'; 
 
 export function newTodo(todo, details, dueDate) {    
 
@@ -14,14 +13,16 @@ export function setParentList(list) {
 }
 
 export function getParentList() {
-    if (localStorage.length != 1) {
+
+    const parentListJSON = localStorage.getItem('parentList');
+
+    if (parentListJSON === null) {
         const newList = [];
         return newList;
     }
     else {
-         const currentListJSON = localStorage.getItem('parentList');
-         let storedList = JSON.parse(currentListJSON)
-         return storedList;
+         let parentList = JSON.parse(parentListJSON);
+         return parentList;
     }
 }
 
@@ -45,20 +46,9 @@ export function organizeParentList() {
     setParentList(parentList);
 }
 
-export function addNewTodo() {
-    const newItemForm = document.getElementById('form');
-    if (!newItemForm) return;
-
-    const todo = newItemForm.todo.value; 
-    const details = !newItemForm.details ? '' : newItemForm.details.value;
-
-    let dueDate = correctDateOffset(newItemForm.dueDate.value);
-    dueDate = format(dueDate, 'YYY-MM-dd');
-
-    const newItem = newTodo(todo, details, dueDate);
-    
+export function addNewTodo(newTodo) {
     const parentList = getParentList();
-    parentList.push(newItem);
+    parentList.push(newTodo);
     setParentList(parentList);
     organizeParentList();
 }

@@ -1,4 +1,4 @@
-import { newTodo, organizeParentList } from './listManager.service';
+import { addNewTodo, correctDateOffset, newTodo, organizeParentList } from './listManager.service';
 import { buildListHtmlElements, clearListElements } from './listDisplay.service';
 import { format } from 'date-fns'; 
 
@@ -58,7 +58,14 @@ export function createNewItemForm () {
         const todo = document.getElementById('todo');
         if (todo.value == '') alert('You must fill out the todo field');
         else {
-            addNewTodo();
+            const todo = newItemForm.todo.value; 
+            const details = !newItemForm.details ? '' : newItemForm.details.value;
+
+            let dueDate = correctDateOffset(newItemForm.dueDate.value);
+            dueDate = format(dueDate, 'YYY-MM-dd');
+
+            const newItem = newTodo(todo, details, dueDate);
+            addNewTodo(newItem);
     
             resetNewItemForm();
             clearListElements();
