@@ -37,8 +37,6 @@ export function organizeParentList() {
 
     const parentList = getParentList();
     parentList.sort(function(todo1, todo2) {
-        if (!todo1 || !todo2) return;
-
         if (todo1[`isCompleted`] && todo2[`isCompleted`]) return 0;
         if (todo1[`isCompleted`] && !todo2[`isCompleted`]) return 1;
         if (!todo1[`isCompleted`] && todo2[`isCompleted`]) return -1;

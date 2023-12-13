@@ -1,5 +1,5 @@
-import { addNewTodo, correctDateOffset, newTodo, organizeParentList } from './listManager.service';
-import { buildListHtmlElements, clearListElements } from './listDisplay.service';
+import { addNewTodo, correctDateOffset, newTodo, organizeParentList } from './listManager';
+import { buildListHtmlElements, clearListElements } from './listDisplay';
 import { format } from 'date-fns'; 
 
 export function createNewItemForm () {
@@ -21,7 +21,8 @@ export function createNewItemForm () {
             const newItemField = document.createElement('input');
             newItemForm.appendChild(newItemField);
             newItemField.placeholder = `wuts gotta get dunn`; 
-            newItemField.id = key;       
+            newItemField.id = key;  
+            continue;     
         }
 
         if (key == 'details') {
@@ -36,6 +37,7 @@ export function createNewItemForm () {
                 newItemField.id = key;       
                 optionalButton.replaceWith(newItemField);
             }) 
+            continue;  
         }
         
         if (key == 'dueDate') {
@@ -43,7 +45,8 @@ export function createNewItemForm () {
             newItemForm.appendChild(newItemField);
             newItemField.id = key;  
             newItemField.type = 'date';
-            newItemField.value = setDefaultDueDate();   
+            newItemField.value = setDefaultDueDate(); 
+            continue;    
         }
     }
 

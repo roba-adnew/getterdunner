@@ -1,6 +1,6 @@
-import * as listManagement from './listManager.service'; 
+import * as listManagement from './listManager'; 
 import { format } from 'date-fns'; 
-import { getTodoByID } from './listManager.service';
+import { getTodoByID } from './listManager';
 
 export function buildListHtmlElements() {
     // Creating the title and header row for the list 
@@ -84,9 +84,15 @@ export function buildListHtmlElements() {
         editTodoButton.type = `button`;
         editTodoButton.innerHTML = `&#9998`;
         editTodoButton.addEventListener('click', () => {
-            if (editTodoButtonCell.parentNode.className == 'completed') {
+            if (parentList[i].isCompleted === true && itemRow.className == 'completed') {
                 alert(`You can only edit items that haven't been completed`);
             }
+            else if ((parentList[i].isCompleted === false 
+                && itemRow.className == 'completed') || 
+                (parentList[i].isCompleted === true 
+                    && itemRow.className == 'not-completed')) {
+                        alert(`this is embarassing this shouldn't happen`); 
+                    }
             else {
                 createEditTodoForm(itemRow);
             }

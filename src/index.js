@@ -1,5 +1,5 @@
-import {  createNewItemForm } from './listForm.service.js';
-import { buildListHtmlElements } from './listDisplay.service.js';
+import { createNewItemForm } from './Form';
+import { buildListHtmlElements } from './listDisplay';
 import './style.css';
 
 createNewItemForm();
